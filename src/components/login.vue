@@ -23,7 +23,7 @@
                     placeholder="Contraseña"
       ></v-text-field>
       <v-container class="align-center px-16 mx-16">
-      <v-btn  to="/home" class="purple white--text"> Iniciar sesion</v-btn>
+      <v-btn  to="/homepage" class="purple white--text"> Iniciar sesion</v-btn>
       </v-container>
 
       <v-container class="align-center px-16 mx-16">
