@@ -1,9 +1,14 @@
 {
-  "posts": [
-    { "id": 1, "title": "json-server", "author": "typicode" }
+  "usuarios": [
+    { "id": 1, "username": "jlopez", "name": "Jorge Lopez", "password": "1234" },
+    { "id": 2, "username": "ada123", "name": "Ana de Armas", "password": "nana" },
+    { "id": 3, "username": "jhon420", "name": "Jhon Doe", "password": "123xd" }
   ],
-  "comments": [
-    { "id": 1, "body": "some comment", "postId": 1 }
-  ],
-  "profile": { "name": "typicode" }
+  "facturas": [
+    { "id": 1, "empresa": "amd", "ruc": "some comment", "valor": 200 , "igv":36 , "userid": 1 },
+    { "id": 2, "empresa": "intel", "ruc": "some comment", "valor": 200 , "igv":36 , "userid": 1 },
+    { "id": 3, "empresa": "san fernando", "ruc": "some comment", "valor": 200 , "igv":36 , "userid": 2 },
+    { "id": 4, "empresa": "backus", "ruc": "some comment", "valor": 200 , "igv":36 , "userid": 3 },
+    { "id": 5, "empresa": "upc", "ruc": "some comment", "valor": 200 , "igv":36 , "userid": 2 }
+  ]
 }
