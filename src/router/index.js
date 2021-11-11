@@ -6,7 +6,7 @@ Vue.use(VueRouter)
 
 const routes = [
   {
-    path: '/homepage',
+    path: '/homepage/:id',
     name: 'homepage',
     component: Homepage
   },

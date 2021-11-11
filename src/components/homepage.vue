@@ -1,6 +1,6 @@
 <template>
   <v-main>
-    <NavBar></NavBar>
+    <NavBar @buttonStatus="changeButton"></NavBar>
     <v-container>
       <v-row>
         <v-col cols="4">
@@ -27,7 +27,7 @@
         </v-col>
         <v-col>
             <v-card class="py=4 px=8 mb-4 rounded-lg d-flex">
-              <v-card-title class="justify-center align-center card-title1">¡Hi Davis Suclle, welcome back!</v-card-title>
+              <v-card-title class="justify-center align-center card-title1">¡Hi {{ this.user.name }}, welcome back!</v-card-title>
             </v-card>
           <v-row>
             <v-card outlined elevation="2" class="ml-3 mr-4 my-6 card-outlined">
@@ -79,6 +79,7 @@
 
 <script>
 import NavBar from "../views/NavBar";
+import userServices from "@/services/userServices";
 
 export default {
   name: "homepage",
@@ -86,7 +87,35 @@ export default {
   data: () => ({
     items: ['BCP', 'Interbank', 'BBVA'],
     buttontrue: true,
+    id: '',
+    user: []
   }),
+  methods:{
+
+    retrieveUser() {
+      userServices.getById(this.id).then((response) =>{
+        console.log("aqui")
+        console.log(this.id)
+        this.user = response.data;
+
+      }).catch(e => {
+        console.log(e);
+      })
+    },
+    changeButton(){
+      this.buttontrue = !this.buttontrue
+    }
+
+  },
+
+  beforeMount() {
+    //console.log("XD")
+    this.id = this.$route.params.id
+    //console.log(this.id)
+  },
+  mounted() {
+    this.retrieveUser()
+  }
 }
 </script>
 

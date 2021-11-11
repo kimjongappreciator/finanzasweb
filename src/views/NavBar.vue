@@ -3,7 +3,7 @@
     <v-toolbar-items class="container pa-0">
       <v-col cols="4" class="col-sm-3 col-md-3 d-flex flex-row align-center pa-0">
         <div class="d-flex justify-center align-center my-auto ml-3 rounded-pill white dense--btn">
-          <v-btn height="40px" class="rounded-l-pill white" icon>
+          <v-btn v-on:click="openBar " height="40px" class="rounded-l-pill white" icon>
             <v-icon>mdi-account</v-icon>
           </v-btn>
           <v-menu offset-y>
@@ -26,9 +26,14 @@
 <script>
 export default {
   name: "NavBar",
+ 
   methods: {
     reloadPage(){
       location.reload();
+    },
+    openBar(){
+
+      this.$emit('buttonStatus')
     }
   }
 }
