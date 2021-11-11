@@ -5,10 +5,10 @@
     { "id": 3, "username": "jhon420", "name": "Jhon Doe", "password": "123xd" }
   ],
   "facturas": [
-    { "id": 1, "empresa": "amd", "ruc": "some comment", "valor": 200 , "igv":36 , "userid": 1 },
-    { "id": 2, "empresa": "intel", "ruc": "some comment", "valor": 200 , "igv":36 , "userid": 1 },
-    { "id": 3, "empresa": "san fernando", "ruc": "some comment", "valor": 200 , "igv":36 , "userid": 2 },
-    { "id": 4, "empresa": "backus", "ruc": "some comment", "valor": 200 , "igv":36 , "userid": 3 },
-    { "id": 5, "empresa": "upc", "ruc": "some comment", "valor": 200 , "igv":36 , "userid": 2 }
+    { "id": 1, "empresa": "AMD", "ruc": "20535943444", "valor": 500 , "fechaemision": "02/02/2021", "fechapago":  "02/03/2021", "status": "Cobrar","userid": 1 },
+    { "id": 2, "empresa": "Intel", "ruc": "20468236053", "valor": 200, "fechaemision": "02/02/2021", "fechapago":  "02/03/2021", "status": "Cobrado","userid": 1 },
+    { "id": 3, "empresa": "San Fernando", "ruc": "20100154308", "valor": 300, "fechaemision": "02/02/2021", "fechapago":  "02/03/2021", "status":"Vencido","userid": 2 },
+    { "id": 4, "empresa": "Backus", "ruc": "20100113610", "valor": 250, "fechaemision": "02/02/2021", "fechapago":  "02/03/2021", "status": "Cobrar","userid": 3 },
+    { "id": 5, "empresa": "UPC", "ruc": "20211614545", "valor": 350, "fechaemision": "02/02/2021", "fechapago":  "02/03/2021", "status": "Cobrado","userid": 2 }
   ]
 }
