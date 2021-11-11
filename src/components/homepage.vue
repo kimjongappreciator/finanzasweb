@@ -7,12 +7,12 @@
           <v-card v-if="buttontrue===true" color="#E8E8E8" class="flexcard" height="700px">
             <v-col>
               <v-row>
-                <v-btn color="#3A00FF" class="pa-lg-12 mt-8 white--text" block>
+                <v-btn color="#3A00FF" class="pa-lg-12 mt-8 white--text" block v-on:click="homebtn = true">
                   Home
                 </v-btn>
               </v-row>
               <v-row>
-                <v-btn color="#3A1BA4" class="pa-lg-12 mt-4 mb-12  white--text" block>Invoices</v-btn>
+                <v-btn color="#3A1BA4" class="pa-lg-12 mt-4 mb-12  white--text" block v-on:click="homebtn= false">Invoices</v-btn>
               </v-row>
               <v-row>
                 <v-btn icon color="#3A1BA4" class="mx-16 card-btn_icon">
@@ -26,7 +26,8 @@
           </v-card>
         </v-col>
         <v-col>
-            <v-card class="py=4 px=8 mb-4 rounded-lg d-flex">
+          <v-container v-if="homebtn === true">
+            <v-card class="py=4 px=8 mb-4 rounded-lg d-flex" >
               <v-card-title class="justify-center align-center card-title1">¡Hi {{ this.user.name }}, welcome back!</v-card-title>
             </v-card>
           <v-row>
@@ -71,6 +72,10 @@
               </v-col>
             </v-card>
           </v-row>
+          </v-container>
+          <v-container v-if="homebtn=== false">
+            <invoice></invoice>
+          </v-container>
         </v-col>
       </v-row>
     </v-container>
@@ -80,15 +85,18 @@
 <script>
 import NavBar from "../views/NavBar";
 import userServices from "@/services/userServices";
+import Invoice from "@/components/invoice";
 
 export default {
   name: "homepage",
-  components: {NavBar},
+  components: {Invoice, NavBar},
   data: () => ({
     items: ['BCP', 'Interbank', 'BBVA'],
     buttontrue: true,
     id: '',
-    user: []
+    user: [],
+    homebtn: true,
+
   }),
   methods:{
 
