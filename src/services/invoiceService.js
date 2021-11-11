@@ -10,8 +10,8 @@ class invoiceService {
     getById(id) {
         return http.get(`${this.endPoint}/${id}`);
     }
-    getByUsername(user) {
-        return http.get(`${this.endPoint}?username=${user}`);
+    getByUserid(user) {
+        return http.get(`${this.endPoint}?userid=${user}`);
     }
 
     create(createAgencyDto) {

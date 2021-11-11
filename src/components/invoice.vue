@@ -5,24 +5,44 @@
   </v-card>
   <v-card>
       <v-list>
-        <v-list-item> a </v-list-item>
-        <v-list-item> a </v-list-item>
-        <v-list-item> a </v-list-item>
+        <v-list-item v-for="invoice in userInvoices" :key="invoice.id"> {{invoice.empresa}} </v-list-item>
+
       </v-list>
     </v-card>
   </v-container>
 </template>
 
 <script>
+
+
+import invoiceService from "@/services/invoiceService";
+
 export default {
   name: "invoice",
+  props:['Uid'],
+
   data: () => ({
-    userInvoices: []
+    userInvoices: [],
+    id: ''
   }),
   methods:{
     retrieveInvoices(){
+      invoiceService.getByUserid(this.id).then((response) =>{
 
+        this.userInvoices = response.data;
+        console.log(response.data)
+      }).catch(e => {
+        console.log(e);
+      })
     }
+  },
+
+  mounted() {
+    this.retrieveInvoices()
+  },
+
+  beforeMount() {
+    this.id= this.Uid
   }
 }
 </script>

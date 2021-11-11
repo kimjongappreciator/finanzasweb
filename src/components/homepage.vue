@@ -74,7 +74,7 @@
           </v-row>
           </v-container>
           <v-container v-if="homebtn=== false">
-            <invoice></invoice>
+            <invoice :Uid ="id"></invoice>
           </v-container>
         </v-col>
       </v-row>
