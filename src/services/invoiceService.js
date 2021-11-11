@@ -2,7 +2,7 @@ import http from '../core/http-common'
 
 class invoiceService {
 
-    endPoint = '/usuarios';
+    endPoint = '/facturas';
 
     getAll() {
         return http.get(this.endPoint);
