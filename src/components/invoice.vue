@@ -2,7 +2,7 @@
   <v-row>
     <v-col cols="12">
       <v-card class="py=4 px=8 mb-2 rounded-lg d-flex">
-        <v-card-title class="justify-center align-center font-weight-bold text-h4 deep-purple--text">Invoices
+        <v-card-title class="justify-center align-center font-weight-bold text-h4 deep-purple--text">Facturas
         </v-card-title>
       </v-card>
     </v-col>
@@ -18,17 +18,38 @@
             <v-switch v-model="singleSelect" label="Single select"></v-switch>
           </v-template>
         </v-data-table>
-        <v-row align="center" justify-xl="center">
-          <v-col>
-            <v-btn  @click="overlayCollect = !overlayCollect">Cobrar</v-btn>
+        <v-row align="center" justify="center">
+          <v-col class="justify-center" align="end">
+            <v-btn  @click="overlayCollect = !overlayCollect"
+                    outlined>Cobrar</v-btn>
+          </v-col>
+          <v-col class="justify-center">
+              <v-btn outlined>
+                Añadir Factura
+              </v-btn>
           </v-col>
         </v-row>
         <v-overlay :value="overlayCollect"
                     :dark="false"
                    >
           <collect :facturas = "selectedIds" ></collect>
-          <v-card><v-btn  @click="overlayCollect = !overlayCollect">Volver</v-btn></v-card>
+          <v-row align="center" class="justify-center mt-5">
+            <v-col align="center" class="justify-center">
+              <v-btn  @click="overlayCollect = !overlayCollect"
+                      outlined
+                      color="deep-purple"
+              >
+                Atras
+              </v-btn>
+            </v-col>
+          </v-row>
+          <v-alert
+              :value="alert"
+              type="error">
+            Por favor seleccione boletas que no esten cobradas.
+          </v-alert>
         </v-overlay>
+
       </v-card>
     </v-col>
   </v-row>
@@ -54,14 +75,15 @@ export default {
     overlayCollect: false,
     overlayAdd: false,
     headers: [
-      { text: 'Company Name', value: 'empresa', sortable:false},
+      { text: 'Nombre de la Empresa', value: 'empresa', sortable:false},
       { text: 'RUC', value: 'ruc', sortable:false},
-      { text: 'Value', value: 'valor', sortable:false},
-      { text: 'Date of Issue', value: 'fechaemision', sortable:false},
-      { text: 'Payment Date', value: 'fechapago', sortable:false},
-      { text: 'Status', value: 'status', sortable: true},
+      { text: 'Monto', value: 'valor', sortable:false},
+      { text: 'Fecha de emision', value: 'fechaemision', sortable:false},
+      { text: 'Fecha de pago', value: 'fechapago', sortable:false},
+      { text: 'Estado', value: 'status', sortable: true, filterable: true},
     ],
-    id: ''
+    id: '',
+    alert: false
   }),
   methods: {
     retrieveInvoices() {
@@ -79,16 +101,29 @@ export default {
       else return 'green'
     },
     showSelected(){
+
+
+
       let a=[]
       for(let i =0; i< this.selected.length; i++){
-
+        if (this.selected[i].status != "Cobrar" )
+        {
+          this.alert = true
+          return
+        }
+        else {
         a.push(this.selected[i])
+        }
       }
+      this.alert = false
       this.selectedIds = a
 
-      let b = JSON.parse(JSON.stringify(this.selectedIds))
-      console.log(b)
-    }
+      //let b = JSON.parse(JSON.stringify(this.selectedIds))
+      //console.log(b)
+    },
+
+
+
   },
 
   mounted() {

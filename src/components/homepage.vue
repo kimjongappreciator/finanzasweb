@@ -12,7 +12,7 @@
                 </v-btn>
               </v-row>
               <v-row>
-                <v-btn color="#3A1BA4" class="pa-lg-12 mt-4 mb-12  white--text" block v-on:click="homebtn= false">Invoices</v-btn>
+                <v-btn color="#3A1BA4" class="pa-lg-12 mt-4 mb-12  white--text" block v-on:click="homebtn= false">Facturas</v-btn>
               </v-row>
               <v-row>
                 <v-btn icon color="#3A1BA4" class="mx-16 card-btn_icon">

@@ -6,22 +6,22 @@
        <thead>
        <tr>
          <th class="text-left">
-           Name
+           Nombre
          </th>
          <th class="text-left">
-           Value
+           Monto
          </th>
          <th class="text-left">
-           Date of Issue
+           Fecha de emision
          </th>
          <th class="text-left">
-           Payment issue
+           Fecha de pago
          </th>
          <th class="text-left">
-           Days
+           Dias calculados
          </th>
          <th class="text-left">
-           Term
+           Periodo (en dias)
          </th>
          <th class="text-left">
            TEP
@@ -30,10 +30,10 @@
            d
          </th>
          <th class="text-left">
-           Net worth
+           Valor neto
          </th>
          <th class="text-left">
-           Value you get
+           Valor que obtienes
          </th>
        </tr>
        </thead>
@@ -70,13 +70,13 @@
 
      </v-col>
      <v-col>
-      <v-text-field placeholder="rate" v-model="tasa" > </v-text-field>
+      <v-text-field placeholder="Tasa (%)" v-model="tasa" > </v-text-field>
      </v-col>
      <v-col>
-       <v-text-field v-if="tna===true" placeholder="capitalizacion" v-model="cap" > </v-text-field>
+       <v-text-field v-if="tna===true" placeholder="Capitalizacion (Dias)" v-model="cap" > </v-text-field>
      </v-col>
      <v-col>
-
+        <v-text-field placeholder="Costos Extra" v-model="costos"></v-text-field>
      </v-col>
    </v-row>
    <v-row>
@@ -108,7 +108,8 @@ export default {
     tasa: "",
     cap: "" ,
     dolares: false,
-    defM: 'Soles'
+    defM: 'Soles',
+    costos: ""
 
   }),
   methods:{
@@ -141,6 +142,7 @@ export default {
       this.tna=!this.tna
     },
     tn(plazo, capitalizacion){
+
       let m = plazo/capitalizacion
       let n = 1/capitalizacion
       let ntasa = this.tasa/100
@@ -181,7 +183,7 @@ export default {
         }
         t = this.tep(d)
         arr.push(t*100)
-        x = this.vNeto(monto, t)
+        x = this.vNeto(monto, t) - this.costos
       if(this.dolares === true)
         cambio = 4
       else
