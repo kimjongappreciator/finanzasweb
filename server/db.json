@@ -5,10 +5,25 @@
     { "id": 3, "username": "jhon420", "name": "Jhon Doe", "password": "123xd" }
   ],
   "facturas": [
-    { "id": 1, "empresa": "AMD", "ruc": "20535943444", "valor": 500 , "fechaemision": "02/02/2021", "fechapago":  "02/03/2021", "status": "Cobrar","userid": 1 },
-    { "id": 2, "empresa": "Intel", "ruc": "20468236053", "valor": 200, "fechaemision": "02/02/2021", "fechapago":  "02/03/2021", "status": "Cobrado","userid": 1 },
-    { "id": 3, "empresa": "San Fernando", "ruc": "20100154308", "valor": 300, "fechaemision": "02/02/2021", "fechapago":  "02/03/2021", "status":"Vencido","userid": 2 },
-    { "id": 4, "empresa": "Backus", "ruc": "20100113610", "valor": 250, "fechaemision": "02/02/2021", "fechapago":  "02/03/2021", "status": "Cobrar","userid": 3 },
-    { "id": 5, "empresa": "UPC", "ruc": "20211614545", "valor": 350, "fechaemision": "02/02/2021", "fechapago":  "02/03/2021", "status": "Cobrado","userid": 2 }
+    { "id": 1, "empresa": "AMD", "ruc": "20535943444", "valor": 500 , "fechaemision": "22/02/2021", "fechapago":  "04/03/2021", "status": "Cobrar","userid": 1,
+      "plazo": 15
+    },
+    { "id": 2, "empresa": "Intel", "ruc": "20468236053", "valor": 200, "fechaemision": "02/02/2021", "fechapago":  "11/10/2021", "status": "Cobrado","userid": 1,
+      "plazo": 30
+    },
+    { "id": 3, "empresa": "San Fernando", "ruc": "20100154308", "valor": 300, "fechaemision": "02/02/2021", "fechapago":  "12/03/2021", "status":"Vencido","userid": 2,
+      "plazo":60 },
+    { "id": 4, "empresa": "Backus", "ruc": "20100113610", "valor": 250, "fechaemision": "02/02/2021", "fechapago":  "12/08/2021", "status": "Cobrar","userid": 3,
+      "plazo": 30
+    },
+    { "id": 5, "empresa": "UPC", "ruc": "20211614545", "valor": 350, "fechaemision": "02/02/2021", "fechapago":  "05/03/2022", "status": "Cobrado","userid": 2,
+    "plazo": 90},
+    { "id": 6, "empresa": "Apple", "ruc": "20535943444", "valor": 500 , "fechaemision": "23/02/2021", "fechapago":  "06/05/2021", "status": "Cobrar","userid": 2,
+      "plazo": 180},
+    { "id": 7, "empresa": "Jhonson", "ruc": "20535943444", "valor": 550 , "fechaemision": "02/08/2021", "fechapago":  "12/10/2021", "status": "Cobrar","userid": 2,
+      "plazo": 30},
+    { "id": 8, "empresa": "Sapphire", "ruc": "20535943444", "valor": 400 , "fechaemision": "02/12/2021", "fechapago":  "11/01/2022", "status": "Cobrar","userid": 2,
+      "plazo": 360
+    }
   ]
 }

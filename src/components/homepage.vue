@@ -18,7 +18,7 @@
                 <v-btn icon color="#3A1BA4" class="mx-16 card-btn_icon">
                   <v-icon x-large>mdi-cog</v-icon>
                 </v-btn>
-                <v-btn icon color="#3A1BA4" class="mx-16 card-btn_icon2">
+                <v-btn icon color="#3A1BA4" class="mx-16 card-btn_icon2" to="/login">
                   <v-icon x-large>mdi-logout</v-icon>
                 </v-btn>
               </v-row>
