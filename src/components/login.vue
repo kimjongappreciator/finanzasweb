@@ -59,6 +59,13 @@
       </v-container>
     </v-card>
 
+      <v-overlay v-if="signup === true">
+        <v-card>
+          <v-card-text> Usuario creado satisfactoriamente </v-card-text>
+
+          <v-btn @click="change"> Volver </v-btn>
+        </v-card>
+      </v-overlay>
     </v-col>
   </v-row>
   </body>
@@ -71,6 +78,7 @@ export default {
   name: "login",
   data: () => ({
     login: true,
+    signup: false,
     email: "",
     pwd: "",
     userdata: {},
@@ -117,7 +125,12 @@ export default {
         .catch(e => {
           console.log(e);
         })
-      this.$router.push("/")
+      this.signup = true
+    },
+
+    change(){
+      this.signup = !this.signup
+      this.login = true
     }
   },
 

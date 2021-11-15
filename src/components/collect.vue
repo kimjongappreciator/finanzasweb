@@ -50,8 +50,8 @@
          <td>{{item.dueTo}}</td>
          <td>{{calcTasaD(item.dueTo, item.value,item.emissionDate.toString(), item.paidDate.toString())[0].toFixed(7)}} %</td>
          <td>{{calcTasaD(item.dueTo, item.value,item.emissionDate.toString(), item.paidDate.toString())[1].toFixed(7)}} %</td>
-         <td>{{item.value}}</td>
-         <td>{{ calcTasaD(item.dueTo, item.value,item.emissionDate.toString(), item.paidDate.toString())[2] }}</td>
+         <td>{{calcTasaD(item.dueTo, item.value,item.emissionDate.toString(), item.paidDate.toString())[2]}}</td>
+         <td>{{ calcTasaD(item.dueTo, item.value,item.emissionDate.toString(), item.paidDate.toString())[3] }}</td>
        </tr>
        </tbody>
 
@@ -174,6 +174,7 @@ export default {
       let d = 0
       let t = 0
       let x = 0
+      let z = 0
       let arr = []
         if(this.tna === true){
           d = this.tn(plazo, this.cap)
@@ -185,7 +186,8 @@ export default {
         }
         t = this.tep(d)
         arr.push(t*100)
-        x = this.vNeto(monto, t) - this.costos
+        x = this.vNeto(monto, t)
+        z = this.vNeto(monto, t) - this.costos
       if(this.dolares === true)
         cambio = 4
       else
@@ -193,6 +195,7 @@ export default {
 
 
       arr.push(x.toFixed(2)*cambio)
+      arr.push(z.toFixed(2)*cambio)
 
       return arr
 

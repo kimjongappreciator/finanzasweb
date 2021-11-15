@@ -55,11 +55,147 @@
                    :dark="false"
         >
 
-          <v-alert
-              :value="alert"
-              type="error">
-            Por favor seleccione boletas que no esten cobradas.
-          </v-alert>
+          <v-card class="px-10">
+            <v-card-text>Añadir</v-card-text>
+            <v-divider></v-divider>
+            <v-row>
+              <v-col class="px-10">
+                <v-text-field
+                    label="Empresa"
+                    placeholder="Ingrese empresa"
+                    hint="For example, flowers or used cars"
+                    v-model="item.company"
+                ></v-text-field>
+              </v-col>
+
+              <v-col class="px-10">
+                <v-text-field
+                    label="RUC"
+                    placeholder="Ingrese RUC de la empresa"
+                    hint="For example, flowers or used cars"
+                    v-model="item.ruc"
+                ></v-text-field>
+              </v-col>
+              <v-col class="px-10">
+                <v-text-field
+                    label="Monto"
+                    placeholder="Ingrese el monto de la factura"
+                    hint="For example, flowers or used cars"
+                    v-model="item.value"
+                ></v-text-field>
+              </v-col>
+            </v-row>
+
+            <v-row>
+              <v-col cols = 4>
+              <v-menu
+                  ref="menu"
+                  v-model="menu"
+                  :close-on-content-click="false"
+                  :return-value.sync="date"
+                  transition="scale-transition"
+                  offset-y
+                  min-width="auto"
+              >
+                <template v-slot:activator="{ on, attrs }">
+                  <v-text-field
+                      v-model="date"
+                      label="Fecha de emision"
+                      prepend-icon="mdi-calendar"
+                      readonly
+                      v-bind="attrs"
+                      v-on="on"
+                  ></v-text-field>
+                </template>
+                <v-date-picker
+                    v-model="date"
+                    no-title
+                    scrollable
+                >
+                  <v-spacer></v-spacer>
+                  <v-btn
+                      text
+                      color="primary"
+                      @click="menu = false"
+                  >
+                    Cancel
+                  </v-btn>
+                  <v-btn
+                      text
+                      color="primary"
+                      @click="$refs.menu.save(date)"
+                  >
+                    OK
+                  </v-btn>
+                </v-date-picker>
+              </v-menu>
+              </v-col>
+
+              <v-col cols = 4>
+                <v-menu
+                    ref="menu2"
+                    v-model="menu2"
+                    :close-on-content-click="false"
+                    :return-value.sync="date2"
+                    transition="scale-transition"
+                    offset-y
+                    min-width="auto"
+                >
+                  <template v-slot:activator="{ on, attrs }">
+                    <v-text-field
+                        v-model="date2"
+                        label="Fecha de pago"
+                        prepend-icon="mdi-calendar"
+                        readonly
+                        v-bind="attrs"
+                        v-on="on"
+                    ></v-text-field>
+                  </template>
+                  <v-date-picker
+                      v-model="date2"
+                      no-title
+                      scrollable
+                  >
+                    <v-spacer></v-spacer>
+                    <v-btn
+                        text
+                        color="primary"
+                        @click="menu2 = false"
+                    >
+                      Cancel
+                    </v-btn>
+                    <v-btn
+                        text
+                        color="primary"
+                        @click="$refs.menu2.save(date2)"
+                    >
+                      OK
+                    </v-btn>
+                  </v-date-picker>
+                </v-menu>
+              </v-col>
+
+              <v-col class="px-10">
+                <v-text-field
+                    label="Periodo en dias"
+                    placeholder="Ingrese el periodo de la factura"
+                    hint="60 si es bimestre, 180 si es semestre"
+                    v-model="item.dueTo"
+                ></v-text-field>
+              </v-col>
+             </v-row>
+            <v-row>
+              <v-col class="px-10">
+                <v-text-field
+                    label="Estado"
+                    placeholder="Ingrese el estado de la factura"
+                    hint="Vencido, Cobrar, Cobrado"
+                    v-model="item.status"
+                ></v-text-field>
+                </v-col>
+            </v-row>
+          </v-card>
+
           <v-row align="center" class="justify-center mt-5">
             <v-col align="center" class="justify-center">
               <v-btn  @click="overlayAdd = !overlayAdd"
@@ -67,6 +203,14 @@
                       color="deep-purple"
               >
                 Atras
+              </v-btn>
+            </v-col>
+            <v-col align="center" class="justify-center">
+              <v-btn  @click="addInvoice"
+                      outlined
+                      color="deep-purple"
+              >
+                Añadir
               </v-btn>
             </v-col>
           </v-row>
@@ -104,7 +248,21 @@ export default {
       { text: 'Estado', value: 'status', sortable: true},
     ],
     id: '',
-    alert: false
+    alert: false,
+    item: {
+      company: '',
+      dueTo: '',
+      emissionDate: '',
+      paidDate: '',
+      ruc: '',
+      status: '',
+      userId: '',
+      value: ''
+    },
+    date: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
+    menu: false,
+    date2: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
+    menu2: false
   }),
   methods: {
     retrieveInvoices() {
@@ -140,6 +298,23 @@ export default {
       //let b = JSON.parse(JSON.stringify(this.selectedIds))
       console.log(a)
     },
+    addInvoice(){
+      this.item.userId=this.id
+      this.item.emissionDate = this.date
+      this.item.paidDate = this.date2
+      console.log(this.item)
+
+      invoiceService.create(this.item).then(() => {
+      })
+          .catch(e => {
+            console.log(e);
+          })
+
+      this.overlayAdd = !this.overlayAdd
+
+    },
+
+
 
 
 
