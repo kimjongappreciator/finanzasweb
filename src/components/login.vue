@@ -51,7 +51,7 @@
       ></v-text-field>
 
       <v-container class="align-center px-16 mx-16">
-        <v-btn class="purple white--text" @click="createUser" href="/login"> Registrar </v-btn>
+        <v-btn class="purple white--text" @click="createUser" > Registrar </v-btn>
       </v-container>
 
       <v-container class="align-center px-16 mx-16">
@@ -117,6 +117,7 @@ export default {
         .catch(e => {
           console.log(e);
         })
+      this.$router.push("/")
     }
   },
 
