@@ -40,18 +40,18 @@
        <tbody>
        <tr
            v-for="item in items"
-           :key="item.empresa"
+           :key="item.company"
        >
-         <td>{{ item.empresa }}</td>
-         <td>{{ item.valor }}</td>
-         <td>{{ item.fechaemision }}</td>
-         <td>{{ item.fechapago }}</td>
-         <td>{{getDays(item.fechaemision.toString(), item.fechapago.toString())}}</td>
-         <td>{{item.plazo}}</td>
-         <td>{{calcTasaD(item.plazo, item.valor,item.fechaemision.toString(), item.fechapago.toString())[0].toFixed(7)}} %</td>
-         <td>{{calcTasaD(item.plazo, item.valor,item.fechaemision.toString(), item.fechapago.toString())[1].toFixed(7)}} %</td>
-         <td>{{item.valor}}</td>
-         <td>{{ calcTasaD(item.plazo, item.valor,item.fechaemision.toString(), item.fechapago.toString())[2] }}</td>
+         <td>{{ item.company }}</td>
+         <td>{{ item.value }}</td>
+         <td>{{ item.emissionDate }}</td>
+         <td>{{ item.paidDate }}</td>
+         <td>{{getDays(item.emissionDate.toString(), item.paidDate.toString())}}</td>
+         <td>{{item.dueTo}}</td>
+         <td>{{calcTasaD(item.dueTo, item.value,item.emissionDate.toString(), item.paidDate.toString())[0].toFixed(7)}} %</td>
+         <td>{{calcTasaD(item.dueTo, item.value,item.emissionDate.toString(), item.paidDate.toString())[1].toFixed(7)}} %</td>
+         <td>{{item.value}}</td>
+         <td>{{ calcTasaD(item.dueTo, item.value,item.emissionDate.toString(), item.paidDate.toString())[2] }}</td>
        </tr>
        </tbody>
 
@@ -114,14 +114,15 @@ export default {
   }),
   methods:{
     parseData(){
+
       this.items = JSON.parse(JSON.stringify(this.facturas))
 
-      //console.log('aqui')
-      //console.log(this.items)
+      console.log('aqui')
+      console.log(this.facturas[0])
     },
     dateFormat(date){
-      let newDate = date.split("/")
-      let x = newDate[1] + '/' + newDate[0] + '/' + newDate[2]
+      let newDate = date.split("-")
+      let x = newDate[1] + '/' + newDate[2] + '/' + newDate[0]
       //console.log(x)
       return x
     },
@@ -168,6 +169,7 @@ export default {
 
     calcTasaD(plazo, monto, d1,d2){
       let dias = this.getDays(d1,d2)
+
       let cambio = 0
       let d = 0
       let t = 0
@@ -202,6 +204,7 @@ export default {
 
   beforeMount() {
     this.parseData()
+    console.log(this.facturas)
   }
 
 

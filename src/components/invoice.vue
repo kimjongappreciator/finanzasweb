@@ -8,6 +8,7 @@
     </v-col>
     <v-col cols="12">
       <v-card>
+
         <v-data-table v-model="selected" :single-select="singleSelect" show-select :headers="headers" :items="userInvoices" @input="showSelected">
           <template v-slot:item.status="{item}">
             <v-chip :color="getColor(item.status)" dark>
@@ -100,7 +101,7 @@ export default {
       { text: 'Monto', value: 'value', sortable:false},
       { text: 'Fecha de emision', value: 'emissionDate', sortable:false},
       { text: 'Fecha de pago', value: 'paidDate', sortable:false},
-      { text: 'Estado', value: 'status', sortable: true, filterable: true},
+      { text: 'Estado', value: 'status', sortable: true},
     ],
     id: '',
     alert: false
@@ -136,8 +137,8 @@ export default {
       this.alert = false
       this.selectedIds = a
 
-      let b = JSON.parse(JSON.stringify(this.selectedIds))
-      console.log(b)
+      //let b = JSON.parse(JSON.stringify(this.selectedIds))
+      console.log(a)
     },
 
 
