@@ -9,7 +9,7 @@
     <v-col cols="12">
       <v-card>
 
-        <v-data-table v-model="selected" :single-select="singleSelect" show-select :headers="headers" :items="userInvoices" @input="showSelected">
+        <v-data-table v-model="selected" :single-select="singleSelect" show-select :headers="headers" :items="userInvoices" item-key="company" @input="showSelected">
           <template v-slot:item.status="{item}">
             <v-chip :color="getColor(item.status)" dark>
               {{item.status}}
