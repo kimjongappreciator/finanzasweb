@@ -2,7 +2,7 @@ import http from '../core/http-common'
 
 class userServices {
 
-    endPoint = '/usuarios';
+    endPoint = 'https://finanzasapi.herokuapp.com/users';
 
     getAll() {
         return http.get(this.endPoint);
@@ -11,7 +11,7 @@ class userServices {
         return http.get(`${this.endPoint}/${id}`);
     }
     getByUsername(user) {
-        return http.get(`${this.endPoint}?username=${user}`);
+        return http.get(`${this.endPoint}/search?username=${user}`);
     }
 
     create(createAgencyDto) {

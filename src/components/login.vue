@@ -82,6 +82,7 @@ export default {
       await userServices.getByUsername(this.email).then((response) =>{
         console.log(this.email)
         this.userdata = response.data;
+        console.log(this.userdata)
 
       }).catch(e => {
         console.log(e);
@@ -89,11 +90,11 @@ export default {
     },
     async ath(){
       await this.retrieveUser()
-      console.log(this.userdata[0].password)
-      if(this.userdata[0].password === this.pwd ){
+      console.log(this.userdata.password)
+      if(this.userdata.password === this.pwd ){
         console.log("piola")
         //await this.$router.push({path: `/homepage`})
-        await this.$router.push({path: `/homepage/${this.userdata[0].id}`})
+        await this.$router.push({path: `/homepage/${this.userdata.userId}`})
       }
       else{
         console.log("incorrecto")

@@ -2,7 +2,7 @@ import http from '../core/http-common'
 
 class invoiceService {
 
-    endPoint = '/facturas';
+    endPoint = 'https://finanzasapi.herokuapp.com/bills';
 
     getAll() {
         return http.get(this.endPoint);
@@ -11,7 +11,7 @@ class invoiceService {
         return http.get(`${this.endPoint}/${id}`);
     }
     getByUserid(user) {
-        return http.get(`${this.endPoint}?userid=${user}`);
+        return http.get(`${this.endPoint}/search?userId=${user}`);
     }
 
     create(createAgencyDto) {

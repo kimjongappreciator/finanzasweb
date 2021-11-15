@@ -24,7 +24,7 @@
                     outlined>Cobrar</v-btn>
           </v-col>
           <v-col class="justify-center">
-              <v-btn outlined>
+              <v-btn @click="overlayAdd = !overlayAdd" outlined>
                 Añadir Factura
               </v-btn>
           </v-col>
@@ -33,6 +33,12 @@
                     :dark="false"
                    >
           <collect :facturas = "selectedIds" ></collect>
+
+          <v-alert
+              :value="alert"
+              type="error">
+            Por favor seleccione boletas que no esten cobradas.
+          </v-alert>
           <v-row align="center" class="justify-center mt-5">
             <v-col align="center" class="justify-center">
               <v-btn  @click="overlayCollect = !overlayCollect"
@@ -43,13 +49,27 @@
               </v-btn>
             </v-col>
           </v-row>
+        </v-overlay>
+        <v-overlay :value="overlayAdd"
+                   :dark="false"
+        >
+
           <v-alert
               :value="alert"
               type="error">
             Por favor seleccione boletas que no esten cobradas.
           </v-alert>
+          <v-row align="center" class="justify-center mt-5">
+            <v-col align="center" class="justify-center">
+              <v-btn  @click="overlayAdd = !overlayAdd"
+                      outlined
+                      color="deep-purple"
+              >
+                Atras
+              </v-btn>
+            </v-col>
+          </v-row>
         </v-overlay>
-
       </v-card>
     </v-col>
   </v-row>
@@ -75,11 +95,11 @@ export default {
     overlayCollect: false,
     overlayAdd: false,
     headers: [
-      { text: 'Nombre de la Empresa', value: 'empresa', sortable:false},
+      { text: 'Nombre de la Empresa', value: 'company', sortable:false},
       { text: 'RUC', value: 'ruc', sortable:false},
-      { text: 'Monto', value: 'valor', sortable:false},
-      { text: 'Fecha de emision', value: 'fechaemision', sortable:false},
-      { text: 'Fecha de pago', value: 'fechapago', sortable:false},
+      { text: 'Monto', value: 'value', sortable:false},
+      { text: 'Fecha de emision', value: 'emissionDate', sortable:false},
+      { text: 'Fecha de pago', value: 'paidDate', sortable:false},
       { text: 'Estado', value: 'status', sortable: true, filterable: true},
     ],
     id: '',
@@ -102,8 +122,6 @@ export default {
     },
     showSelected(){
 
-
-
       let a=[]
       for(let i =0; i< this.selected.length; i++){
         if (this.selected[i].status != "Cobrar" )
@@ -118,8 +136,8 @@ export default {
       this.alert = false
       this.selectedIds = a
 
-      //let b = JSON.parse(JSON.stringify(this.selectedIds))
-      //console.log(b)
+      let b = JSON.parse(JSON.stringify(this.selectedIds))
+      console.log(b)
     },
 
 
