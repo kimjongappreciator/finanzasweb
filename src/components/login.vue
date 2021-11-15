@@ -37,17 +37,21 @@
     <v-card v-if="login===false" class = logincard>
       <h1 class="purple--text px-16 mx-16 pt-5">Registrate</h1>
       <v-divider class="ma-5"></v-divider>
-      <v-text-field class="px-16 mx-16 mt-10"
+      <v-text-field v-model="item.name" class="px-16 mx-16 mt-10"
                     outlined
-                    placeholder="Email"
+                    placeholder="Nombre"
       ></v-text-field>
-      <v-text-field class="px-16 mx-16 mt-3"
+      <v-text-field v-model="item.username" class="px-16 mx-16 mt-3"
+                    outlined
+                    placeholder="Nombre de usuario"
+      ></v-text-field>
+      <v-text-field v-model="item.password" class="px-16 mx-16 mt-3"
                     outlined
                     placeholder="Contraseña"
       ></v-text-field>
 
       <v-container class="align-center px-16 mx-16">
-        <v-btn  to="/homepage" class="purple white--text"> Registrar </v-btn>
+        <v-btn class="purple white--text" @click="createUser" href="/login"> Registrar </v-btn>
       </v-container>
 
       <v-container class="align-center px-16 mx-16">
@@ -69,9 +73,13 @@ export default {
     login: true,
     email: "",
     pwd: "",
-    userdata: {}
-
-
+    userdata: {},
+    item: {
+      userId: '',
+      name: '',
+      username: '',
+      password: '',
+    }
   }),
   methods:{
     changeLog(){
@@ -101,6 +109,14 @@ export default {
       }
 
 
+    },
+    createUser(){
+      userServices.create(this.item)
+        .then(() => {
+        })
+        .catch(e => {
+          console.log(e);
+        })
     }
   },
 
