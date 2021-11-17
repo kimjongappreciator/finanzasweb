@@ -280,11 +280,11 @@ export default {
         this.facturaC.name = this.items[i].name
         this.facturaC.value = this.items[i].value
         this.facturaC.days = this.getDays(this.date, this.items[i].paidDate.toString())
-        this.facturaC.tep=0
-        this.facturaC.d=0
-        this.facturaC.netWorth=0
-        this.facturaC.ValueYouGet=0
-        this.facturaC.tcea = 0
+        this.facturaC.tep= this.calcTasaD(this.items[i].dueTo, this.items[i].value,this.date, this.items[i].paidDate.toString())[0].toFixed(7)
+        this.facturaC.d=this.calcTasaD(this.items[i].dueTo, this.items[i].value,this.date, this.items[i].paidDate.toString())[1].toFixed(7)
+        this.facturaC.netWorth=this.calcTasaD(this.items[i].dueTo, this.items[i].value,this.date, this.items[i].paidDate.toString())[2].toFixed(7)
+        this.facturaC.ValueYouGet=this.calcTasaD(this.items[i].dueTo, this.items[i].value,this.date, this.items[i].paidDate.toString())[3].toFixed(7)
+        this.facturaC.tcea = this.calcTasaD(this.items[i].dueTo, this.items[i].value,this.date, this.items[i].paidDate.toString())[4].toFixed(7)
         //<td>{{calcTasaD(item.dueTo, item.value,date, item.paidDate.toString())[0].toFixed(7)}} %</td>
         //<td>{{calcTasaD(item.dueTo, item.value,date, item.paidDate.toString())[1].toFixed(7)}} %</td>
         //<td>{{calcTasaD(item.dueTo, item.value,date, item.paidDate.toString())[2]}}</td>
