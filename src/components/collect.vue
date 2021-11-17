@@ -15,7 +15,7 @@
            Fecha de emision
          </th>
          <th class="text-left">
-           Fecha de pago
+           Fecha de vencimiento
          </th>
          <th class="text-left">
            Dias calculados
@@ -35,6 +35,9 @@
          <th class="text-left">
            Valor que obtienes
          </th>
+         <th class="text-left">
+           TCEA
+         </th>
        </tr>
        </thead>
        <tbody>
@@ -46,12 +49,13 @@
          <td>{{ item.value }}</td>
          <td>{{ item.emissionDate }}</td>
          <td>{{ item.paidDate }}</td>
-         <td>{{getDays(item.emissionDate.toString(), item.paidDate.toString())}}</td>
+         <td>{{getDays(date, item.paidDate.toString())}}</td>
          <td>{{item.dueTo}}</td>
-         <td>{{calcTasaD(item.dueTo, item.value,item.emissionDate.toString(), item.paidDate.toString())[0].toFixed(7)}} %</td>
-         <td>{{calcTasaD(item.dueTo, item.value,item.emissionDate.toString(), item.paidDate.toString())[1].toFixed(7)}} %</td>
-         <td>{{calcTasaD(item.dueTo, item.value,item.emissionDate.toString(), item.paidDate.toString())[2]}}</td>
-         <td>{{ calcTasaD(item.dueTo, item.value,item.emissionDate.toString(), item.paidDate.toString())[3] }}</td>
+         <td>{{calcTasaD(item.dueTo, item.value,date, item.paidDate.toString())[0].toFixed(7)}} %</td>
+         <td>{{calcTasaD(item.dueTo, item.value,date, item.paidDate.toString())[1].toFixed(7)}} %</td>
+         <td>{{calcTasaD(item.dueTo, item.value,date, item.paidDate.toString())[2]}}</td>
+         <td>{{ calcTasaD(item.dueTo, item.value,date, item.paidDate.toString())[3] }}</td>
+         <td>{{ calcTasaD(item.dueTo, item.value,date, item.paidDate.toString())[4].toFixed(7) }} %</td>
        </tr>
        </tbody>
 
@@ -59,7 +63,7 @@
      </template>
    </v-simple-table>
    <v-row>
-     <v-col cols="3">
+     <v-col cols="2">
        <v-select
            :items ="select"
            v-model="def"
@@ -69,14 +73,17 @@
        </v-select>
 
      </v-col>
-     <v-col>
+     <v-col class="px-10">
       <v-text-field placeholder="Tasa (%)" v-model="tasa" > </v-text-field>
      </v-col>
      <v-col>
        <v-text-field v-if="tna===true" placeholder="Capitalizacion (Dias)" v-model="cap" > </v-text-field>
      </v-col>
      <v-col>
-        <v-text-field placeholder="Costos Extra" v-model="costos"></v-text-field>
+        <v-text-field placeholder="Costos iniciales" v-model="costos"></v-text-field>
+     </v-col>
+     <v-col>
+       <v-text-field placeholder="Retencion" v-model="retencion"></v-text-field>
      </v-col>
    </v-row>
    <v-row>
@@ -87,6 +94,50 @@
            @change="setDolares"
 
        ></v-select>
+     </v-col>
+
+     <v-col cols ="4">
+        <v-menu
+         ref="menu"
+         v-model="menu"
+         :close-on-content-click="false"
+         :return-value.sync="date"
+         transition="scale-transition"
+         offset-y
+         min-width="auto"
+     >
+       <template v-slot:activator="{ on, attrs }">
+         <v-text-field
+             v-model="date"
+             label="Fecha de pago"
+             prepend-icon="mdi-calendar"
+             readonly
+             v-bind="attrs"
+             v-on="on"
+         ></v-text-field>
+       </template>
+       <v-date-picker
+           v-model="date"
+           no-title
+           scrollable
+       >
+         <v-spacer></v-spacer>
+         <v-btn
+             text
+             color="primary"
+             @click="menu = false"
+         >
+           Cancel
+         </v-btn>
+         <v-btn
+             text
+             color="primary"
+             @click="$refs.menu.save(date)"
+         >
+           OK
+         </v-btn>
+       </v-date-picker>
+     </v-menu>
      </v-col>
 
    </v-row>
@@ -109,8 +160,23 @@ export default {
     cap: "" ,
     dolares: false,
     defM: 'Soles',
-    costos: ""
+    costos: "",
+    retencion: "",
+    date: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
+    menu: false,
+    facturaC: {
+      name: '',
+      value: 0,
+      days:0,
+      tep: 0,
+      d:0,
+      netWorth:0,
+      ValueYouGet: 0,
+      tcea: 0,
 
+
+
+    }
   }),
   methods:{
     parseData(){
@@ -166,6 +232,9 @@ export default {
       let nmonto = monto * t
       return monto-nmonto
     },
+    tcea(v1,v2,d){
+      return(Math.pow((v1/v2),(360/d)-1))
+    },
 
     calcTasaD(plazo, monto, d1,d2){
       let dias = this.getDays(d1,d2)
@@ -175,6 +244,7 @@ export default {
       let t = 0
       let x = 0
       let z = 0
+      let tc = 0
       let arr = []
         if(this.tna === true){
           d = this.tn(plazo, this.cap)
@@ -187,22 +257,43 @@ export default {
         t = this.tep(d)
         arr.push(t*100)
         x = this.vNeto(monto, t)
-        z = this.vNeto(monto, t) - this.costos
+        z = this.vNeto(monto, t) - this.costos - this.retencion
       if(this.dolares === true)
         cambio = 4
       else
         cambio = 1
 
+      tc = this.tcea(monto, z, dias)
 
       arr.push(x.toFixed(2)*cambio)
       arr.push(z.toFixed(2)*cambio)
+      arr.push(tc*100)
 
       return arr
 
     },
     setDolares(){
         this.dolares = !this.dolares
+    },
+    cobrar(){
+      for (let i =0; i < this.items.length; i++){
+        this.facturaC.name = this.items[i].name
+        this.facturaC.value = this.items[i].value
+        this.facturaC.days = this.getDays(this.date, this.items[i].paidDate.toString())
+        this.facturaC.tep=0
+        this.facturaC.d=0
+        this.facturaC.netWorth=0
+        this.facturaC.ValueYouGet=0
+        this.facturaC.tcea = 0
+        //<td>{{calcTasaD(item.dueTo, item.value,date, item.paidDate.toString())[0].toFixed(7)}} %</td>
+        //<td>{{calcTasaD(item.dueTo, item.value,date, item.paidDate.toString())[1].toFixed(7)}} %</td>
+        //<td>{{calcTasaD(item.dueTo, item.value,date, item.paidDate.toString())[2]}}</td>
+        //<td>{{ calcTasaD(item.dueTo, item.value,date, item.paidDate.toString())[3] }}</td>
+        //<td>{{ calcTasaD(item.dueTo, item.value,date, item.paidDate.toString())[4].toFixed(7) }} %</td>
+      }
     }
+
+
   },
 
   beforeMount() {
