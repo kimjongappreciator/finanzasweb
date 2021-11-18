@@ -57,6 +57,7 @@
          <td>{{calcTasaD(item.dueTo, item.value,date, item.paidDate.toString())[2]}}</td>
          <td>{{ calcTasaD(item.dueTo, item.value,date, item.paidDate.toString())[3] }}</td>
          <td>{{ calcTasaD(item.dueTo, item.value,date, item.paidDate.toString())[4].toFixed(7) }} %</td>
+
        </tr>
        </tbody>
 
@@ -155,6 +156,8 @@
 </template>
 
 <script>
+import paidBillService from "@/services/paidBillService";
+
 export default {
   name: "collect",
   props:['facturas'],
@@ -276,14 +279,16 @@ export default {
     cobrar(item){
         let x = { }
         x.company = item.company
+        x.d=parseFloat(this.calcTasaD(item.dueTo, item.value,this.date, item.paidDate.toString())[1].toFixed(7))
+        x.days = parseInt(this.getDays(this.date, item.paidDate.toString()))
+        x.netWorth=parseFloat(this.calcTasaD(item.dueTo, item.value,this.date, item.paidDate.toString())[2].toFixed(7))
         x.ruc = item.ruc
-        x.value = item.value
-        x.days = this.getDays(this.date, item.paidDate.toString())
-        x.tep= this.calcTasaD(item.dueTo, item.value,this.date, item.paidDate.toString())[0].toFixed(7)
-        x.d=this.calcTasaD(item.dueTo, item.value,this.date, item.paidDate.toString())[1].toFixed(7)
-        x.netWorth=this.calcTasaD(item.dueTo, item.value,this.date, item.paidDate.toString())[2].toFixed(7)
-        x.ValueYouGet=this.calcTasaD(item.dueTo, item.value,this.date, item.paidDate.toString())[3].toFixed(7)
-        x.tcea = this.calcTasaD(item.dueTo, item.value,this.date, item.paidDate.toString())[4].toFixed(7)
+        x.tcea = parseFloat(this.calcTasaD(item.dueTo, item.value,this.date, item.paidDate.toString())[4].toFixed(7))
+        x.tep= parseFloat(this.calcTasaD(item.dueTo, item.value,this.date, item.paidDate.toString())[0].toFixed(7))
+        x.userId = item.user.userId
+        x.value = parseFloat(item.value)
+        x.valueYouGet= parseFloat(this.calcTasaD(item.dueTo, item.value,this.date, item.paidDate.toString())[3].toFixed(7))
+
 
         return x
       },
@@ -291,12 +296,25 @@ export default {
 
     Cobrarfunc(){
       let array = []
-        for(let i=0; i<this.items.length; i++){
+      let x = { }
+
+      for(let i=0; i<this.items.length; i++){
           array.push(this.cobrar(this.items[i]))
         }
-        console.log(array[0])
-        console.log(array[1])
-    }
+        for(let j = 0; j <array.length; j++){
+         //console.log(array[j])
+          x = array[j]
+          console.log(x)
+         paidBillService.create(x)
+             .then(() => {
+         })
+             .catch(e => {
+               console.log(e);
+             })
+        }
+
+    },
+
 
 
 

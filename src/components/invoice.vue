@@ -24,10 +24,14 @@
             <v-btn  @click="overlayCollect = !overlayCollect"
                     outlined>Cobrar</v-btn>
           </v-col>
-          <v-col class="justify-center">
+          <v-col class="justify-center" align="center">
               <v-btn @click="overlayAdd = !overlayAdd" outlined>
                 Añadir Factura
               </v-btn>
+          </v-col>
+          <v-col class="justify-center" align="left">
+            <v-btn  @click="deleteBill"
+                    outlined>Eliminar</v-btn>
           </v-col>
         </v-row>
         <v-overlay :value="overlayCollect"
@@ -297,6 +301,12 @@ export default {
 
       //let b = JSON.parse(JSON.stringify(this.selectedIds))
       console.log(a)
+    },
+    deleteBill(){
+      let a = this.selected[0].billId
+      invoiceService.delete(a).then(console.log(a)).catch(e => {
+        console.log(e)
+      })
     },
     addInvoice(){
       this.item.userId=this.id
