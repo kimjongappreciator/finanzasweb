@@ -7,12 +7,15 @@
           <v-card v-if="buttontrue===true" color="#E8E8E8" class="flexcard" height="700px">
             <v-col>
               <v-row>
-                <v-btn color="#3A00FF" class="pa-lg-12 mt-8 white--text" block v-on:click="homebtn = true">
+                <v-btn color="#3A00FF" class="pa-lg-12 mt-8 white--text" block v-on:click="changeButton2">
                   Home
                 </v-btn>
               </v-row>
               <v-row>
-                <v-btn color="#3A1BA4" class="pa-lg-12 mt-4 mb-12  white--text" block v-on:click="homebtn= false">Facturas</v-btn>
+                <v-btn color="#3A1BA4" class="pa-lg-12 mt-4 mb-12  white--text" block v-on:click="changeButton3">Facturas</v-btn>
+              </v-row>
+              <v-row>
+                <v-btn color="#3A1BA4" class="pa-lg-12 mt-4 mb-12  white--text" block v-on:click="changeButton4">Detalle Facturas Cobradas</v-btn>
               </v-row>
               <v-row>
                 <v-btn icon color="#3A1BA4" class="mx-16 card-btn_icon">
@@ -73,8 +76,13 @@
             </v-card>
           </v-row>
           </v-container>
-          <v-container v-if="homebtn=== false">
+          <v-container v-if="facturas=== true">
             <invoice :Uid ="id"></invoice>
+          </v-container>
+
+          <v-container v-if="detalle=== true">
+            <h1>Hello</h1>
+            <detalle></detalle>
           </v-container>
         </v-col>
       </v-row>
@@ -86,16 +94,19 @@
 import NavBar from "../views/NavBar";
 import userServices from "@/services/userServices";
 import Invoice from "@/components/invoice";
+import Detalle from "@/components/detalle";
 
 export default {
   name: "homepage",
-  components: {Invoice, NavBar},
+  components: {Detalle, Invoice, NavBar},
   data: () => ({
     items: ['BCP', 'Interbank', 'BBVA'],
     buttontrue: true,
     id: '',
     user: [],
     homebtn: true,
+    facturas: false,
+    detalle : false
 
   }),
   methods:{
@@ -112,6 +123,21 @@ export default {
     },
     changeButton(){
       this.buttontrue = !this.buttontrue
+      },
+    changeButton2(){
+      this.homebtn = true
+      this.facturas = false
+      this.detalle = false
+    },
+    changeButton3(){
+      this.homebtn = false
+      this.facturas = true
+      this.detalle = false
+    },
+    changeButton4(){
+      this.homebtn = false
+      this.facturas = false
+      this.detalle = true
     }
 
   },

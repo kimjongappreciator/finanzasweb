@@ -1,4 +1,5 @@
 <template>
+  <v-container>
  <v-card class="pa-15">
    <v-card-title>Hola</v-card-title>
    <v-simple-table light>
@@ -142,6 +143,15 @@
 
    </v-row>
  </v-card>
+    <v-row class="pt-10">
+      <v-col align="center" class="justify-center">
+        <v-btn @click="Cobrarfunc"
+              >
+          Cobrar
+        </v-btn>
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 
 <script>
@@ -164,19 +174,7 @@ export default {
     retencion: "",
     date: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
     menu: false,
-    facturaC: {
-      name: '',
-      value: 0,
-      days:0,
-      tep: 0,
-      d:0,
-      netWorth:0,
-      ValueYouGet: 0,
-      tcea: 0,
 
-
-
-    }
   }),
   methods:{
     parseData(){
@@ -233,7 +231,7 @@ export default {
       return monto-nmonto
     },
     tcea(v1,v2,d){
-      return(Math.pow((v1/v2),(360/d)-1))
+      return(Math.pow((v1/v2),(360/d))-1)
     },
 
     calcTasaD(plazo, monto, d1,d2){
@@ -275,23 +273,31 @@ export default {
     setDolares(){
         this.dolares = !this.dolares
     },
-    cobrar(){
-      for (let i =0; i < this.items.length; i++){
-        this.facturaC.name = this.items[i].name
-        this.facturaC.value = this.items[i].value
-        this.facturaC.days = this.getDays(this.date, this.items[i].paidDate.toString())
-        this.facturaC.tep= this.calcTasaD(this.items[i].dueTo, this.items[i].value,this.date, this.items[i].paidDate.toString())[0].toFixed(7)
-        this.facturaC.d=this.calcTasaD(this.items[i].dueTo, this.items[i].value,this.date, this.items[i].paidDate.toString())[1].toFixed(7)
-        this.facturaC.netWorth=this.calcTasaD(this.items[i].dueTo, this.items[i].value,this.date, this.items[i].paidDate.toString())[2].toFixed(7)
-        this.facturaC.ValueYouGet=this.calcTasaD(this.items[i].dueTo, this.items[i].value,this.date, this.items[i].paidDate.toString())[3].toFixed(7)
-        this.facturaC.tcea = this.calcTasaD(this.items[i].dueTo, this.items[i].value,this.date, this.items[i].paidDate.toString())[4].toFixed(7)
-        //<td>{{calcTasaD(item.dueTo, item.value,date, item.paidDate.toString())[0].toFixed(7)}} %</td>
-        //<td>{{calcTasaD(item.dueTo, item.value,date, item.paidDate.toString())[1].toFixed(7)}} %</td>
-        //<td>{{calcTasaD(item.dueTo, item.value,date, item.paidDate.toString())[2]}}</td>
-        //<td>{{ calcTasaD(item.dueTo, item.value,date, item.paidDate.toString())[3] }}</td>
-        //<td>{{ calcTasaD(item.dueTo, item.value,date, item.paidDate.toString())[4].toFixed(7) }} %</td>
-      }
+    cobrar(item){
+        let x = { }
+        x.company = item.company
+        x.ruc = item.ruc
+        x.value = item.value
+        x.days = this.getDays(this.date, item.paidDate.toString())
+        x.tep= this.calcTasaD(item.dueTo, item.value,this.date, item.paidDate.toString())[0].toFixed(7)
+        x.d=this.calcTasaD(item.dueTo, item.value,this.date, item.paidDate.toString())[1].toFixed(7)
+        x.netWorth=this.calcTasaD(item.dueTo, item.value,this.date, item.paidDate.toString())[2].toFixed(7)
+        x.ValueYouGet=this.calcTasaD(item.dueTo, item.value,this.date, item.paidDate.toString())[3].toFixed(7)
+        x.tcea = this.calcTasaD(item.dueTo, item.value,this.date, item.paidDate.toString())[4].toFixed(7)
+
+        return x
+      },
+
+
+    Cobrarfunc(){
+      let array = []
+        for(let i=0; i<this.items.length; i++){
+          array.push(this.cobrar(this.items[i]))
+        }
+        console.log(array[0])
+        console.log(array[1])
     }
+
 
 
   },
