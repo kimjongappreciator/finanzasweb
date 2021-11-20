@@ -23,6 +23,10 @@ class invoiceService {
     delete(id) {
         return http.delete( `${this.endPoint}/${id}`);
     }
+    patch(id, patchItem){
+        return http.patch(`${this.endPoint}/${id}`, patchItem);
+    }
+
 
 }
 export default new invoiceService();

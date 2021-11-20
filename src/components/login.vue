@@ -68,6 +68,8 @@
       </v-overlay>
     </v-col>
   </v-row>
+
+  <v-alert type="error" :value="fault"> Usuario o contraseña incorrectos</v-alert>
   </body>
 </template>
 
@@ -87,7 +89,8 @@ export default {
       name: '',
       username: '',
       password: '',
-    }
+    },
+    fault: false
   }),
   methods:{
     changeLog(){
@@ -114,6 +117,8 @@ export default {
       }
       else{
         console.log("incorrecto")
+        this.fault = true
+        setTimeout(()=>{this.fault=false}, 1000)
       }
 
 

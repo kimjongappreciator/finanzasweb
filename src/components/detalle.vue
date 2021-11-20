@@ -1,6 +1,6 @@
 <template>
 <v-card>
-  <v-card-text> AAAAAAAAAAAAAAAAAAAAAAAAA </v-card-text>
+  <v-card-text> Detalle de las facturas cobradas </v-card-text>
 
   <v-simple-table light>
     <template v-slot:default>
@@ -90,7 +90,7 @@ export default {
       paidBillService.delete(id).then(console.log("success")).catch(e =>{
         console.log(e)
       })
-
+      this.retrieveBills()
     }
 
 

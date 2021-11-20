@@ -192,9 +192,10 @@
               <v-col class="px-10">
                 <v-text-field
                     label="Estado"
-                    placeholder="Ingrese el estado de la factura"
+                    placeholder="Ingrese estado"
                     hint="Vencido, Cobrar, Cobrado"
                     v-model="item.status"
+
                 ></v-text-field>
                 </v-col>
             </v-row>
@@ -266,8 +267,9 @@ export default {
     date: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
     menu: false,
     date2: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
-    menu2: false
-  }),
+    menu2: false,
+
+   }),
   methods: {
     retrieveInvoices() {
       invoiceService.getByUserid(this.id).then((response) => {
@@ -307,8 +309,10 @@ export default {
       invoiceService.delete(a).then(console.log(a)).catch(e => {
         console.log(e)
       })
+      this.retrieveInvoices()
     },
-    addInvoice(){
+    async addInvoice(){
+
       this.item.userId=this.id
       this.item.emissionDate = this.date
       this.item.paidDate = this.date2
@@ -322,6 +326,7 @@ export default {
 
       this.overlayAdd = !this.overlayAdd
 
+      this.retrieveInvoices()
     },
 
 
@@ -336,7 +341,11 @@ export default {
 
   beforeMount() {
     this.id = this.Uid
-  }
+  },
+
+
+
+
 }
 </script>
 

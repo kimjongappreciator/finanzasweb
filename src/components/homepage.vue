@@ -81,7 +81,7 @@
           </v-container>
 
           <v-container v-if="detalle=== true">
-            <h1>Hello</h1>
+            <h1>Detalle</h1>
             <detalle :Usid ="id"></detalle>
           </v-container>
         </v-col>

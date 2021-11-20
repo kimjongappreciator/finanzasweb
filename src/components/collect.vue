@@ -157,6 +157,7 @@
 
 <script>
 import paidBillService from "@/services/paidBillService";
+import invoiceService from "@/services/invoiceService";
 
 export default {
   name: "collect",
@@ -177,6 +178,7 @@ export default {
     retencion: "",
     date: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
     menu: false,
+
 
   }),
   methods:{
@@ -301,7 +303,7 @@ export default {
       for(let i=0; i<this.items.length; i++){
           array.push(this.cobrar(this.items[i]))
         }
-        for(let j = 0; j <array.length; j++){
+      for(let j = 0; j <array.length; j++){
          //console.log(array[j])
           x = array[j]
           console.log(x)
@@ -311,7 +313,24 @@ export default {
              .catch(e => {
                console.log(e);
              })
-        }
+       }
+
+      let patch= {
+        status: 'Cobrado'
+      }
+
+
+      for (let k = 0; k < array.length; k++){
+        console.log(this.items[k].billId)
+        invoiceService.patch(this.items[k].billId, patch).
+        then(()=>{
+
+        }).
+        catch(e => {
+          console.log(e)
+        })
+      }
+
 
     },
 
