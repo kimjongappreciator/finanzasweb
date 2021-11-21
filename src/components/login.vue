@@ -48,6 +48,7 @@
       <v-text-field v-model="item.password" class="px-16 mx-16 mt-3"
                     outlined
                     placeholder="Contraseña"
+                    type="password"
       ></v-text-field>
 
       <v-container class="align-center px-16 mx-16">

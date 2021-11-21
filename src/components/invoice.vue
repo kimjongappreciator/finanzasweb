@@ -190,13 +190,7 @@
              </v-row>
             <v-row>
               <v-col class="px-10">
-                <v-text-field
-                    label="Estado"
-                    placeholder="Ingrese estado"
-                    hint="Vencido, Cobrar, Cobrado"
-                    v-model="item.status"
 
-                ></v-text-field>
                 </v-col>
             </v-row>
           </v-card>
@@ -260,7 +254,7 @@ export default {
       emissionDate: '',
       paidDate: '',
       ruc: '',
-      status: '',
+      status: 'Cobrar',
       userId: '',
       value: ''
     },

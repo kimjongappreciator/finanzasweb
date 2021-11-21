@@ -304,7 +304,7 @@ export default {
           array.push(this.cobrar(this.items[i]))
         }
       for(let j = 0; j <array.length; j++){
-         //console.log(array[j])
+         console.log(array[j])
           x = array[j]
           console.log(x)
          paidBillService.create(x)
